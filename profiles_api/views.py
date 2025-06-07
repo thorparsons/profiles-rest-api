@@ -4,6 +4,8 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters 
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
 
 
 
@@ -122,4 +124,14 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         """Update an existing user profile"""
         serializer.save()
     
+    
+    
+    
+class UserLoginApiView(ObtainAuthToken):
+    """Handle creating user authentication tokens"""
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+    def post(self, request, *args, **kwargs):
+        """Create a new auth token for the user"""
+        return super().post(request, *args, **kwargs)
     
